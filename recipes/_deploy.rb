@@ -37,9 +37,9 @@ end
   lib_filename = Pathname.new(URI.parse(url).path).basename.to_s
   remote_file "#{node['gerrit']['install_dir']}/lib/#{lib_filename}" do
     source url
-    checksum checksum
     owner node['gerrit']['user']
     group node['gerrit']['group']
+    action :create_if_missing
   end
 end
 
