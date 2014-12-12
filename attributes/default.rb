@@ -40,13 +40,11 @@ default['gerrit']['config']['sendemail']['smtpServer'] = "localhost"
 default['gerrit']['config']['container']['user'] = node['gerrit']['user']
 default['gerrit']['config']['sshd']['listenAddress'] = "*:29418"
 default['gerrit']['config']['cache']['directory'] = "cache"
-default['gerrit']['config']['httpd']['listenUrl'] = "http://*:8080"
 
 # these confidential attributes defined in gerrit_config will be shifted to etc/secure.config
 default['gerrit']['secure_config']['database']['password'] = true
 default['gerrit']['secure_config']['auth']['registerEmailPrivateKey'] = true
 default['gerrit']['secure_config']['auth']['restTokenPrivateKey'] = true
-
 
 # When using MySql as a db for Gerrit, the Gerrit documentation recommends changing the db charset
 # to latin1, in order to allow 1000 byte keys using the default MySQL MyISAM engine.  This can lead

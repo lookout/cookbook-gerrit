@@ -27,6 +27,8 @@ include_recipe "gerrit::_database"
 
 if node['gerrit']['proxy']['enable']
   include_recipe "gerrit::proxy"
+else
+  node.set['gerrit']['config']['httpd']['listenUrl'] = 'http://*:8080'
 end
 
 include_recipe "gerrit::_deploy"
