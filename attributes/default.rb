@@ -46,33 +46,8 @@ default['gerrit']['secure_config']['database']['password'] = true
 default['gerrit']['secure_config']['auth']['registerEmailPrivateKey'] = true
 default['gerrit']['secure_config']['auth']['restTokenPrivateKey'] = true
 
-# When using MySql as a db for Gerrit, the Gerrit documentation recommends changing the db charset
-# to latin1, in order to allow 1000 byte keys using the default MySQL MyISAM engine.  This can lead
-# to spurious errors from Gerrit regarding "Illegal mix of collations".  We can avoid this by being
-# explicit to the connector about which charset to use, by setting database.url in gerrit.config.
-#
-# One may use utf8 and avoid the key length limitation by switching to InnoDB, though we don't want
-# to assume this choice.
-default['gerrit']['database']['jdbc_url'] =
-"jdbc:mysql://#{node['gerrit']['database']['host']}:3306" +
-    "/#{node['gerrit']['database']['name']}?" +
-    "user=#{node['gerrit']['database']['username']}&" +
-    "password=#{node['gerrit']['database']['password']}&" +
-    "useUnicode=false&characterEncoding=latin1"
-
-
 # the core plugins that should be installed. Installation only works at site initialization.
 default['gerrit']['core_plugins'] = ['replication', 'commit-message-length-validator', 'reviewnotes', 'download-commands']
-
-
-
-# TODO I'm yet unsure, how to handle this in the future
-
-# if this is set, an entry in the ssl_certificates data bag matching the given name must exist
-# this uses the ssl-certificates cookbook
-# http://github.com/binarymarbles/chef-ssl-certificates
-
-override['mysql']['bind_address'] = "127.0.0.1"
 
 default['gerrit']['theme']['compile_files'] = []
 default['gerrit']['theme']['static_files'] = []

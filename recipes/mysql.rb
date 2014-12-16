@@ -22,6 +22,28 @@ include_recipe "mysql::client"
 include_recipe "mysql::server"
 include_recipe "database::mysql"
 
+# When using MySql as a db for Gerrit, the Gerrit documentation recommends changing the db charset
+# to latin1, in order to allow 1000 byte keys using the default MySQL MyISAM engine.  This can lead
+# to spurious errors from Gerrit regarding "Illegal mix of collations".  We can avoid this by being
+# explicit to the connector about which charset to use, by setting database.url in gerrit.config.
+#
+# One may use utf8 and avoid the key length limitation by switching to InnoDB, though we don't want
+# to assume this choice.
+node.set['gerrit']['config']['database']['jdbc_url'] =
+"jdbc:mysql://#{node['gerrit']['config']['database']['hostname']}:3306" +
+    "/#{node['gerrit']['config']['database']['database']}?" +
+    "user=#{node['gerrit']['config']['database']['username']}&" +
+    "password=#{node['gerrit']['config']['database']['password']}&" +
+    "useUnicode=false&characterEncoding=latin1"
+
+# TODO I'm yet unsure, how to handle this in the future
+
+# if this is set, an entry in the ssl_certificates data bag matching the given name must exist
+# this uses the ssl-certificates cookbook
+# http://github.com/binarymarbles/chef-ssl-certificates
+
+node.set['mysql']['bind_address'] = "127.0.0.1"
+
 # TODO delete other occurrences of this file
 # the version can be found in gerrit-pgm/src/main/resources/com/google/gerrit/pgm/libraries.config
 remote_file "#{node['gerrit']['install_dir']}/lib/mysql-connector-java-5.1.21.jar" do
