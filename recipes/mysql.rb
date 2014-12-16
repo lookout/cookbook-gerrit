@@ -29,7 +29,7 @@ include_recipe "database::mysql"
 #
 # One may use utf8 and avoid the key length limitation by switching to InnoDB, though we don't want
 # to assume this choice.
-node.set['gerrit']['config']['database']['jdbc_url'] =
+node.set['gerrit']['config']['database']['jdbc'] =
 "jdbc:mysql://#{node['gerrit']['config']['database']['hostname']}:3306" +
     "/#{node['gerrit']['config']['database']['database']}?" +
     "user=#{node['gerrit']['config']['database']['username']}&" +
