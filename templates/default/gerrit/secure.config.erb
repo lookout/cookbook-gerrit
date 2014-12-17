@@ -1,9 +1,3 @@
-<% # TODO remove this from the loop below %>
-<% unless node['gerrit']['config']['database']['type'] == 'H2' %>
-[database]
-	password = <%= node['gerrit']['config']['database']['password'] %>
-<% end %>
-
 <% # select all attributes specified as part of the secure.config file %>
 <% node['gerrit']['secure_config'].select{|section| node['gerrit']['config'][section]}.each do |section, entries| %>
 [<%= section %>]
