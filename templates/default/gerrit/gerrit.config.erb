@@ -11,6 +11,17 @@ end.each do |k,v|
 	<%=k%> = <%= subv%>
 <%
     end
+  elsif v.kind_of?(Hash)
+    # support gerrit config [section "hash"] case.
+    # for example, [cache "web_sessions"]
+%>
+[<%= section %> "<%= k %>"]
+<%
+    v.each do |subk,subv|
+%>
+	<%=subk%> = <%=subv%>
+<%
+    end
   else
     # wrap values that contain a '#' in double quotes
     v = '"' + v + '"' if v.to_s.include? '#'
