@@ -1,6 +1,7 @@
 # we do not support Gerrit below 2.9
-default['gerrit']['version'] = "2.9.2"
-default['gerrit']['war']['download_url'] = "http://gerrit-releases.storage.googleapis.com/gerrit-#{node['gerrit']['version']}.war"
+default['gerrit']['version'] = "2.11.2"
+default['gerrit']['war']['download_url'] = "https://www.gerritcodereview.com/download/gerrit-#{node['gerrit']['version']}.war"
+default['gerrit']['war']['checksum'] = "b4f8b698c4a3"
 
 default['gerrit']['hostname'] = node['fqdn']
 

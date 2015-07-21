@@ -10,7 +10,7 @@ war_path = "#{node['gerrit']['home']}/war/gerrit-#{node['gerrit']['version']}.wa
 remote_file war_path do
   owner node['gerrit']['user']
   source node['gerrit']['war']['download_url']
-  # checksum node['gerrit']['war']['checksum'][node['gerrit']['version']]
+  checksum node['gerrit']['war']['checksum']
   notifies :run, "execute[gerrit-init]", :immediately
   notifies :run, "execute[gerrit-reindex]", :immediately
   action :create_if_missing
